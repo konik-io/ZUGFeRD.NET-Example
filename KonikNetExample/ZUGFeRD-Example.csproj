@@ -33,9 +33,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="ZUGFeRD.NET">
-      <HintPath>..\..\konik.net-dll\target\ZUGFeRD.NET.dll</HintPath>
-    </Reference>
     <Reference Include="IKVM.OpenJDK.Charsets">
       <HintPath>..\packages\IKVM.8.0.5449.1\lib\IKVM.OpenJDK.Charsets.dll</HintPath>
     </Reference>
@@ -77,6 +74,9 @@
     </Reference>
     <Reference Include="IKVM.Runtime">
       <HintPath>..\packages\IKVM.8.0.5449.1\lib\IKVM.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="ZUGFeRD.NET">
+      <HintPath>..\packages\ZUGFeRD.NET.1.0.1\lib\ZUGFeRD.NET.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
