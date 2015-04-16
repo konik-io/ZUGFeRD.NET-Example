@@ -117,8 +117,8 @@ namespace io.konik.net.example
 			if (violations.size() > 0) {
 				System.Console.WriteLine("Invoice has (" + violations.size()  + ") violations.");
 				foreach (ConstraintViolation violation in violations.toArray()){
-					System.Console.Write (violation.getPropertyPath() + " MSG: ");
-					System.Console.Write (violation.getMessage() + "\n");
+					System.Console.Write (violation.getMessage() + " @ ");
+					System.Console.Write (violation.getPropertyPath() + "\n");
 				}
 			} else {
 				System.Console.WriteLine ("No Violations in invoice found ");
