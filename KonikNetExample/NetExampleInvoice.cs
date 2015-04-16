@@ -33,6 +33,9 @@ using io.konik.zugferd.unqualified;
 
 using Country = com.neovisionaries.i18n.CountryCode;
 using Currency = com.neovisionaries.i18n.CurrencyCode;
+using io.konik.validation;
+using javax.validation;
+using java.util;
 
 
 
@@ -44,6 +47,7 @@ namespace io.konik.net.example
 		{
 			System.Console.WriteLine ("Konik for .NET");
 			Invoice invoice = createInvoice ();
+			validate (invoice);
 			attachInvoiceToPdf (invoice);
 			System.Console.WriteLine ("ZUGFeRD Invocie created see outputfile acme_invoice-42_ZUGFeRD.pdf");
 		}
@@ -55,11 +59,11 @@ namespace io.konik.net.example
 			ZfDate nextMonth = new ZfDateMonth (DateUtils.addMonths (today, 1));
 
 			Invoice invoice = new Invoice (ConformanceLevel.BASIC);    // <1>
-			invoice.setHeader (new Header ()
-				.setInvoiceNumber ("20131122-42")
-				.setCode (DocumentCode._380)
-				.setIssued (today)
-				.addNote (new Note ("MFG"))
+			invoice.setHeader(new Header()
+				.setInvoiceNumber("20131122-42")
+				.setCode(DocumentCode._380)
+				.setIssued(today)
+				.addNote(new Note("MFG"))
 				.setName ("Rechnung"));
 
 			Trade trade = new Trade ();
@@ -104,5 +108,22 @@ namespace io.konik.net.example
 			OutputStream resultingPdf = new FileOutputStream ("acme_invoice-42_ZUGFeRD.pdf");
 			handler.appendInvoice (invoice, inputPdf, resultingPdf);     // <2>
 		}
+
+		static void validate(Invoice invoice){
+			
+			InvoiceValidator Validator = new InvoiceValidator();
+			Set violations = Validator.validate(invoice);  		
+
+			if (violations.size() > 0) {
+				System.Console.WriteLine("Invoice has (" + violations.size()  + ") violations.");
+				foreach (ConstraintViolation violation in violations.toArray()){
+					System.Console.Write (violation.getPropertyPath() + " MSG: ");
+					System.Console.Write (violation.getMessage() + "\n");
+				}
+			} else {
+				System.Console.WriteLine ("No Violations in invoice found ");
+			}
+		}
+
 	}
 }
