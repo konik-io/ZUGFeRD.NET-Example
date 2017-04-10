@@ -36,6 +36,14 @@ using Currency = com.neovisionaries.i18n.CurrencyCode;
 using io.konik.validation;
 using javax.validation;
 using java.util;
+using io.konik.sdk;
+using io.konik.sdk.invoices;
+using io.konik.sdk.http;
+using System.Collections.Generic;
+using java.security;
+using org.bouncycastle.jce.provider;
+using io.konik.main;
+using javax.crypto;
 
 
 
@@ -45,10 +53,17 @@ namespace io.konik.net.example
 	{
 		public static void Main (string[] args)
 		{
+			// Add it if using this lib in another lib.
+			ikvm.runtime.Startup.addBootClassPathAssembly(typeof(io.konik.zugferd.ObjectFactory).Assembly);
+
+			//cryptoSupportTest();
 			System.Console.WriteLine ("Konik for .NET");
 			Invoice invoice = createInvoice ();
 			validate (invoice);
 			attachInvoiceToPdf (invoice);
+			Amount a = new Amount(100, Currency.EUR);
+			System.Console.WriteLine (a.getCurrency().getCurrency());
+
 			System.Console.WriteLine ("ZUGFeRD Invocie created see outputfile acme_invoice-42_ZUGFeRD.pdf");
 		}
 
